@@ -113,6 +113,21 @@ test("handles the paste event and splits the clipboard on delimiters", () => {
   ]);
 });
 
+test("accepts non-internal props on the top-level div", () => {
+  var onMouseOutCalled = false;
+  const $el = mount(
+    mockItem({
+      onMouseOut: () => {
+        onMouseOutCalled = true;
+      },
+    })
+  );
+  const ReactTagsInstance = $el.instance().refs.child;
+  const $input = $el.find(".ReactTags__tagInputField");
+  $input.simulate("mouseOut");
+  expect(onMouseOutCalled).to.equal(true);
+});
+
 describe("autocomplete/suggestions filtering", () => {
   test("updates suggestions state as expected based on default filter logic", () => {
     const $el = mount(mockItem());
